@@ -7,3 +7,7 @@ reportlab
 pandas
 numpy
 ddgs
+streamlit
+python-dotenv
+groq
+langchain
