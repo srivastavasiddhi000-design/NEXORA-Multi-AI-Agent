@@ -1,41 +1,71 @@
-def research_agent(query):
+import streamlit as st
+from nexora_agents import research_agent
 
-    memory = recall_memory("Research")
 
-    sources = web_search(query)
+st.set_page_config(
+    page_title="NEXORA Research",
+    page_icon="🔎",
+    layout="wide"
+)
 
-    prompt = f"""
-You are NEXORA Research Agent.
 
-Previous Memory:
-{memory}
+st.title("🔎 NEXORA Research Agent")
 
-Web Sources:
-{sources}
-
-User Query:
-{query}
-
-Create a detailed research report:
-
-1. Overview
-2. Latest Information
-3. Key Findings
-4. Advantages / Disadvantages
-5. Future Scope
-6. Conclusion
-
-Use the sources intelligently.
+st.markdown(
 """
+### Research Intelligence Module
+
+Ask anything and get:
+- Detailed analysis
+- Latest insights
+- Key findings
+- Future scope
+"""
+)
 
 
-    response = groq_chat(prompt)
+# chat history
+if "research_chat" not in st.session_state:
+    st.session_state.research_chat = []
 
 
-    save_memory(
-        "Research",
-        query
+for chat in st.session_state.research_chat:
+    with st.chat_message(chat["role"]):
+        st.markdown(chat["content"])
+
+
+
+query = st.chat_input(
+    "Ask your research question..."
+)
+
+
+if query:
+
+    st.session_state.research_chat.append(
+        {
+            "role":"user",
+            "content":query
+        }
     )
 
 
-    return response
+    with st.chat_message("user"):
+        st.markdown(query)
+
+
+    with st.chat_message("assistant"):
+
+        with st.spinner("Researching..."):
+
+            response = research_agent(query)
+
+        st.markdown(response)
+
+
+        st.session_state.research_chat.append(
+            {
+                "role":"assistant",
+                "content":response
+            }
+        )
