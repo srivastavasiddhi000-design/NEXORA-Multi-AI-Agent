@@ -1,25 +1,8 @@
 streamlit
-
-# Environment variables
-python-dotenv
-
-# LLM APIs
-groq
-mistralai
-
-# RAG stack
-langchain
-langchain-core
-langchain-community
-langchain-text-splitters
-
-# Vector database / embeddings
-faiss-cpu
-sentence-transformers
-
-# PDF / document loading
-pypdf
-
-# Utilities
-requests
+openai
+speechrecognition
+streamlit-mic-recorder
+pydub
+reportlab
+pandas
 numpy
